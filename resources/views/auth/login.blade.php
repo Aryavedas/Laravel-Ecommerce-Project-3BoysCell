@@ -24,6 +24,11 @@
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
+        <div class="flex text-xs gap-2 mt-3"> 
+            <p>Belum Punya Akun? </p>
+            <a href="/register" class="font">Daftar</a>
+        </div>
+
         <!-- Remember Me -->
         <div class="block mt-4">
             <label for="remember_me" class="inline-flex items-center">

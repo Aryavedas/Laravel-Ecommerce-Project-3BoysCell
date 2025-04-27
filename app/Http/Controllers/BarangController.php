@@ -12,7 +12,9 @@ class BarangController extends Controller
      */
     public function index()
     {
-        //
+        $barangs = Barang::all();
+
+        return view("dashboard", compact("barangs"));
     }
 
     /**
