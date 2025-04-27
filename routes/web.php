@@ -3,6 +3,7 @@
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\KeranjangController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -10,9 +11,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::get("/", [BarangController::class, 'index'])->middleware('auth')->name('dashboard');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route Keranjang
+Route::get('/keranjang', [KeranjangController::class, "index"])->name('keranjang');
+Route::get('/keranjang-hapus', [KeranjangController::class, 'destroy'])->name('keranjang.delete');
+Route::get('/keranjang/{id}', [KeranjangController::class, 'store'])->name('keranjang.store');
+
+// Route Alert
+Route::get("/success", function () {
+    return view("alert-success");
+})->name("alert.success");
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
