@@ -39,8 +39,15 @@
             <div class="container border bg-white py-7 mx-auto rounded-lg shadow-sm my-10 px-10">
                 <div class="w-full flex justify-between items-center pb-7">
                     <h1 class="font-extrabold text-base lg:text-2xl">Selamat Datang Ditoko Kami</h1>
-                    <a href="{{ route('keranjang') }}" class="text-white bg-slate-800 px-4 py-3 rounded-lg font-bold text-sm">Lihat
-                        Kerjang</a>
+
+                    <div class="flex gap-4">
+                        <a href="{{ route('keranjang') }}"
+                            class="text-white bg-slate-800 px-4 py-3 rounded-lg font-bold text-sm">Lihat
+                            Kerjang</a>
+                            <a href="{{ route('transaction') }}"
+                            class="text-white bg-sky-700 px-4 py-3 rounded-lg font-bold text-sm">Lihat Transaksi</a>
+                    </div>
+
                 </div>
                 <div class="grid grid-cols-3 gap-5">
 
@@ -71,7 +78,7 @@
                                     </div>
 
                                     <div class="card-button-keranjang">
-                                        <a href="{{ route("keranjang.store", $barang->id) }}"
+                                        <a href="{{ route('keranjang.store', $barang->id) }}"
                                             class="text-white text-sm font-bold bg-slate-800 px-4 py-3 rounded-lg">Masukkan
                                             Keranjang</a> <!-- Button Keranjang -->
                                     </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Keranjang;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Models\Transaction;
 
 class KeranjangController extends Controller
 {
@@ -21,6 +22,51 @@ class KeranjangController extends Controller
         }
 
         return view('keranjang', compact(['keranjangs', 'total_harga']));
+    }
+
+    public function buat_pesanan()
+    {
+        $keranjangs = Keranjang::with(['user', 'barang'])->get();
+
+        // Pengecekan Validasi
+        if ($keranjangs->isEmpty()) {
+            return redirect(route('keranjang'));
+        }
+        /////
+
+        // Variable $total_harga
+        $total_harga = 0;
+        for ($i = 0; $i < count($keranjangs); $i++) {
+            $total_harga += $keranjangs[$i]->barang->harga;
+        }
+        /////
+
+        // Variable $user_id
+        $user_id = Auth::user()->id;
+        ////
+
+        // Variable $barang_ids
+        $barang_ids_array = [];
+        $barang_ids = "";
+        for ($i = 0; $i < count($keranjangs); $i++) {
+            $barang_ids_array[] = $keranjangs[$i]->barang->id;
+        }
+        $barang_ids = implode(",", $barang_ids_array);
+        /////
+
+        // Penyimpanan Ke DB:Transaction
+        $transaction = new Transaction();
+        $transaction->order_id = "ORDER - " . rand();
+        $transaction->total_harga = $total_harga;
+        $transaction->status = "pending";
+        $transaction->user_id = $user_id;
+        $transaction->barang_ids = $barang_ids;
+        $transaction->save();
+        Keranjang::truncate();
+        // Transaction::truncate();
+        /////
+
+        return redirect(route('alert.success'));
     }
 
     /**

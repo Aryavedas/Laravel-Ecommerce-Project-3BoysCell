@@ -17,7 +17,7 @@ return new class extends Migration
             $table->decimal('total_harga');
             $table->string('status');
             $table->string('barang_ids');
-            $table->string('snap_token');
+            $table->string('snap_token')->nullable();
             $table->string('order_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
