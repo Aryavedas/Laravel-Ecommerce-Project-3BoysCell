@@ -13,9 +13,18 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $transactions = Transaction::all()->where("user_id", Auth::user()->id);
+        $transactions = Transaction::all()->where("user_id", Auth::user()->id)->where("status", "pending");
 
         return view('transaction', compact("transactions"));
+    }
+
+    public function payment_success_handler(Request $request)
+    {
+        $transaction = Transaction::where("id", $request->transaction_id)->first();
+        $transaction->status = "success";
+        $transaction->save();
+
+        return redirect(route('dashboard'));
     }
 
     /**
