@@ -26,17 +26,32 @@ class BarangResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('nama')
+                    ->required() // Sebaiknya tambah required
                     ->columnSpan(4),
+                
                 Forms\Components\TextInput::make('harga')
+                    ->required()
                     ->columnSpan(4)
                     ->numeric()
                     ->inputMode('decimal'),
+                
                 Forms\Components\Textarea::make('deskripsi')
+                    ->required()
                     ->columnSpan(4),
+                
                 Forms\Components\TextInput::make('stok')
+                    ->required()
                     ->columnSpan(4)
                     ->numeric(),
+
+                // --- PERUBAHAN PENTING DI SINI ---
                 Forms\Components\FileUpload::make('gambar')
+                    ->required()
+                    ->disk('supabase')           // 1. Wajib: Gunakan disk supabase
+                    ->directory('products')      // 2. Opsional: Masukkan ke folder 'products' di bucket
+                    ->visibility('public')       // 3. Wajib: Agar gambar bisa dilihat pengunjung
+                    ->image()                    // 4. Validasi: Pastikan yg diupload gambar
+                    ->columnSpan(4),
             ]);
     }
 
@@ -44,11 +59,15 @@ class BarangResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('nama'),
-                TextColumn::make('harga'),
-                TextColumn::make('deskripsi'),
+                TextColumn::make('nama')->searchable(),
+                TextColumn::make('harga')->money('IDR'), // Format Rupiah otomatis
+                TextColumn::make('deskripsi')->limit(50),
                 TextColumn::make('stok'),
-                ImageColumn::make('gambar')->size(200)
+                
+                // --- TABLE JUGA HARUS TAHU DISKNYA ---
+                ImageColumn::make('gambar')
+                    ->disk('supabase') // Wajib: Beritahu table ambil gambar di supabase
+                    ->size(100),       // Ukuran preview di table
             ])
             ->filters([
                 //
