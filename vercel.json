@@ -2,12 +2,12 @@
     "version": 2,
     "framework": null,
     "functions": {
-        "api/index.php": { "runtime": "vercel-php@0.7.2" }
+        "api/index.php": { "runtime": "vercel-php@0.7.4" }
     },
     "routes": [
         {
-            "src": "/(css|js|images|storage|build)/.*",
-            "dest": "/public/$0"
+            "src": "/(build|storage|favicon.ico|robots.txt)/(.*)",
+            "dest": "/public/$1/$2"
         },
         {
             "src": "/(.*)",
@@ -17,7 +17,16 @@
     "env": {
         "APP_ENV": "production",
         "APP_DEBUG": "true",
-        "APP_URL": "https://3boyscell.vercel.app",
-        "ASSET_URL": "https://3boyscell.vercel.app"
+        
+        "LOG_CHANNEL": "stderr",
+        "CACHE_DRIVER": "array",
+        "SESSION_DRIVER": "cookie",
+
+        "VIEW_COMPILED_PATH": "/tmp",
+        "APP_CONFIG_CACHE": "/tmp/config.php",
+        "APP_EVENTS_CACHE": "/tmp/events.php",
+        "APP_PACKAGES_CACHE": "/tmp/packages.php",
+        "APP_ROUTES_CACHE": "/tmp/routes.php",
+        "APP_SERVICES_CACHE": "/tmp/services.php"
     }
 }
