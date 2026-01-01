@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,13 +13,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // Cara Aman (Cek dulu agar tidak error "Duplicate Entry" saat di-run berkali-kali)
+        $user = User::where('email', 'admin@gmail.com')->first();
 
-        User::factory()->create([
-            'name' => 'admin',
-            'email' => 'admin@gmail.com',
-            'password' => '11111111',
-            'is_admin' => 1,
-        ]);
+        if (!$user) {
+            User::create([
+                'name' => 'admin',
+                'email' => 'admin@gmail.com',
+                'password' => Hash::make('11111111'),
+                'is_admin' => 1,
+            ]);
+        }
     }
 }
