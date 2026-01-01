@@ -6,16 +6,12 @@
     },
     "routes": [
         {
-            "src": "/build/(.*)",
-            "dest": "/public/build/$1"
+            "src": "/(build|storage|favicon.ico|robots.txt)/(.*)",
+            "dest": "/public/$1/$2"
         },
         {
-            "src": "/storage/(.*)",
-            "dest": "/public/storage/$1"
-        },
-        {
-            "src": "/favicon.ico",
-            "dest": "/public/favicon.ico"
+            "src": "/(.*)",
+            "dest": "/api/index.php"
         }
     ],
     "env": {
@@ -29,7 +25,10 @@
         "SESSION_DRIVER": "cookie",
 
         "VIEW_COMPILED_PATH": "/tmp",
-        "APP_SERVICES_CACHE": "/tmp/services.php",
-        "APP_PACKAGES_CACHE": "/tmp/packages.php"
+        "APP_CONFIG_CACHE": "/tmp/config.php",
+        "APP_EVENTS_CACHE": "/tmp/events.php",
+        "APP_PACKAGES_CACHE": "/tmp/packages.php",
+        "APP_ROUTES_CACHE": "/tmp/routes.php",
+        "APP_SERVICES_CACHE": "/tmp/services.php"
     }
 }
