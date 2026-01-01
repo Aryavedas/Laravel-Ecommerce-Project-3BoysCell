@@ -56,7 +56,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-                'can:accessFilament', // cek gate
+                // 'can:accessFilament', // cek gate
             ]);
     }
 }
