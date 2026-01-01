@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KeranjangController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\MidtransController;
+use Illuminate\Support\Facades\Artisan;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -30,6 +31,32 @@ Route::post('/generate-snap-token', [MidtransController::class, 'generate_snap_t
 Route::get("/success", function () {
     return view("alert-success");
 })->name("alert.success");
+
+// Deploy App
+Route::get('/install', function () {
+    try {
+        // 1. Jalankan Migrasi (Membuat Tabel)
+        // force => true diperlukan karena env di vercel biasanya production
+        Artisan::call('migrate', ['--force' => true]);
+        $output = Artisan::output();
+
+        // 2. Jalankan Seeder (Isi Data Awal / Admin)
+        Artisan::call('db:seed', ['--force' => true]);
+        $output .= "\n" . Artisan::output();
+
+        // 3. (Opsional) Storage Link jika pakai filesystem public
+        Artisan::call('storage:link');
+        $output .= "\n" . Artisan::output();
+
+        // 4. (Opsional) Clear Cache agar konfigurasi fresh
+        Artisan::call('config:clear');
+        Artisan::call('cache:clear');
+
+        return response()->make("<h1>Setup Berhasil!</h1><pre>$output</pre>", 200);
+    } catch (\Exception $e) {
+        return response()->make("<h1>Error!</h1><p>" . $e->getMessage() . "</p>", 500);
+    }
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
