@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Filament\Panel;
 
 class User extends Authenticatable
 {
@@ -55,5 +56,12 @@ class User extends Authenticatable
     public function transactions()
     {
         return $this->hasMany(Transaction::class);
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        // Sesuaikan logika ini dengan kebutuhan Anda
+        // Contoh: Hanya user yang kolom is_admin-nya true DAN emailnya terverifikasi
+        return $this->is_admin == 1; 
     }
 }

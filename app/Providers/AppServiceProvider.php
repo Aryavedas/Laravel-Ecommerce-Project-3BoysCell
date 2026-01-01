@@ -31,6 +31,9 @@ class AppServiceProvider extends ServiceProvider
         // Paksa HTTPS jika di Production (Vercel)
         if (config('app.env') === 'production') {
             URL::forceScheme('https');
+
+            // TAMBAHAN: Memaksa asset menggunakan HTTPS juga
+            $this->app['request']->server->set('HTTPS', 'on');
         }
     }
 }
