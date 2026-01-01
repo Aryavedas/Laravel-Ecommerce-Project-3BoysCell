@@ -66,7 +66,7 @@ class KeranjangController extends Controller
         // Transaction::truncate();
         /////
 
-        return redirect(route('alert.success'));
+        return redirect(route('transaction'));
     }
 
     /**
@@ -88,7 +88,7 @@ class KeranjangController extends Controller
         $keranjang->barang_id = $id;
         $keranjang->save();
 
-        return redirect(route("alert.success"));
+        return redirect(route("keranjang"));
     }
 
     /**
