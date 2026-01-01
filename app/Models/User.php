@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'is_admin'
     ];
 
     /**
@@ -60,8 +61,6 @@ class User extends Authenticatable
 
     public function canAccessPanel(Panel $panel): bool
     {
-        // Sesuaikan logika ini dengan kebutuhan Anda
-        // Contoh: Hanya user yang kolom is_admin-nya true DAN emailnya terverifikasi
         return $this->is_admin == 1; 
     }
 }

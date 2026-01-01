@@ -37,7 +37,7 @@ Route::get('/install', function () {
     try {
         // 1. Jalankan Migrasi (Membuat Tabel)
         // force => true diperlukan karena env di vercel biasanya production
-        Artisan::call('migrate', ['--force' => true]);
+        Artisan::call('migrate:fresh', ['--force' => true]);
         $output = Artisan::output();
 
         // 2. Jalankan Seeder (Isi Data Awal / Admin)
