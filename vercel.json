@@ -17,7 +17,7 @@
     "env": {
         "APP_ENV": "production",
         "APP_DEBUG": "true",
-        "APP_URL": "https://3boyscell.vercel.app",
+        "APP_URL": "https://todolist-claudia.vercel.app",
         
         "LOG_CHANNEL": "stderr",
         
